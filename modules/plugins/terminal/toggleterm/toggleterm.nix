@@ -2,11 +2,11 @@
   pkgs,
   lib,
   ...
-}:
-let
+}: let
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.nvim.binds) mkMappingOption;
-  inherit (lib.types)
+  inherit
+    (lib.types)
     nullOr
     str
     enum
@@ -18,16 +18,17 @@ let
   inherit (lib.modules) mkRenamedOptionModule;
   inherit (lib.nvim.types) mkPluginSetupOption luaInline;
   inherit (lib.generators) mkLuaInline;
-in
-{
+in {
   imports = [
-    (mkRenamedOptionModule
-      [ "vim" "terminal" "toggleterm" "direction" ]
-      [ "vim" "terminal" "toggleterm" "setupOpts" "direction" ]
+    (
+      mkRenamedOptionModule
+      ["vim" "terminal" "toggleterm" "direction"]
+      ["vim" "terminal" "toggleterm" "setupOpts" "direction"]
     )
-    (mkRenamedOptionModule
-      [ "vim" "terminal" "toggleterm" "enable_winbar" ]
-      [ "vim" "terminal" "toggleterm" "setupOpts" "enable_winbar" ]
+    (
+      mkRenamedOptionModule
+      ["vim" "terminal" "toggleterm" "enable_winbar"]
+      ["vim" "terminal" "toggleterm" "setupOpts" "enable_winbar"]
     )
   ];
 
@@ -73,9 +74,11 @@ in
         '';
       };
       winbar = {
-        enabled = mkEnableOption "winbar in terminal" // {
-          default = true;
-        };
+        enabled =
+          mkEnableOption "winbar in terminal"
+          // {
+            default = true;
+          };
         name_formatter = mkOption {
           type = luaInline;
           description = "Winbar formatter function.";
@@ -125,6 +128,5 @@ in
         open = mkMappingOption "Open slides [toggleterm]" "<leader>ss";
       };
     };
-
   };
 }

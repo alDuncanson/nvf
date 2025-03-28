@@ -2,8 +2,7 @@
   config,
   lib,
   ...
-}:
-let
+}: let
   inherit (lib.strings) optionalString;
   inherit (lib.lists) optional;
   inherit (lib.modules) mkIf;
@@ -14,8 +13,7 @@ let
   cfg = config.vim.terminal.toggleterm;
   lazygitMapDesc = "Open lazygit [toggleterm]";
   slidesMapDesc = "Open slides [toggleterm]";
-in
-{
+in {
   config = mkIf cfg.enable {
     vim = {
       lazy.plugins.toggleterm-nvim = {
@@ -51,7 +49,11 @@ in
           optionalString cfg.lazygit.enable ''
             local terminal = require 'toggleterm.terminal'
             local lazygit = terminal.Terminal:new({
-              cmd = '${if (cfg.lazygit.package != null) then getExe cfg.lazygit.package else "lazygit"}',
+              cmd = '${
+              if (cfg.lazygit.package != null)
+              then getExe cfg.lazygit.package
+              else "lazygit"
+            }',
               direction = '${cfg.lazygit.direction}',
               hidden = true,
               on_open = function(term)
@@ -64,7 +66,11 @@ in
           + optionalString cfg.slides.enable ''
             local terminal = require 'toggleterm.terminal'
             local slides = terminal.Terminal:new({
-              cmd = '${if (cfg.slides.package != null) then getExe cfg.slides.package else "slides"}',
+              cmd = '${
+              if (cfg.slides.package != null)
+              then getExe cfg.slides.package
+              else "slides"
+            }',
               hidden = true,
               on_open = function(term)
                 vim.cmd("startinsert!")
