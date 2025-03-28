@@ -77,7 +77,7 @@ in {
               end
             })
 
-            vim.keymap.set('n', ${toLuaObject cfg.slides.mappings.open}, function() lazygit:toggle() end, {silent = true, noremap = true, desc = '${slidesMapDesc}'})
+            vim.keymap.set('n', ${toLuaObject cfg.slides.mappings.open}, function() slides:toggle() end, {silent = true, noremap = true, desc = '${slidesMapDesc}'})
           '';
       };
     };
