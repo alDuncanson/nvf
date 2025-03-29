@@ -65,13 +65,19 @@ in {
           ''
           + optionalString cfg.slides.enable ''
             local terminal = require 'toggleterm.terminal'
+
+            local file_path = vim.fn.expand("%:p")
+
+            if file_path == "" then
+              print("No file open")
+              return
+            end
+
             local slides = terminal.Terminal:new({
-              cmd = '${
-              if (cfg.slides.package != null)
-              then getExe cfg.slides.package
-              else "slides"
-            }',
+              cmd = 'slides ' .. file_path,
+              direction = 'float',
               hidden = true,
+              close_on_exit = true,
               on_open = function(term)
                 vim.cmd("startinsert!")
               end
